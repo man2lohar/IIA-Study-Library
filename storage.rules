@@ -1,0 +1,16 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /materials/{fileName} {
+      // Anyone (incl. anonymous) can upload — kept simple since this is a
+      // trusted student community. Limited to 25MB and common study-material types.
+      allow write: if request.resource.size < 25 * 1024 * 1024
+        && request.resource.contentType.matches('application/pdf|image/.*|video/.*|application/.*|text/.*');
+
+      // Files are readable by anyone who has the link (Firestore still gates
+      // whether a link is shown publicly before admin approval).
+      allow read: if true;
+    }
+  }
+}

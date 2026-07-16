@@ -1,0 +1,43 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      // Keep this list identical to ADMIN_EMAILS in firebase-config.js
+      return request.auth != null &&
+        request.auth.token.email in [
+          'your-email@gmail.com'
+        ];
+    }
+
+    // Any signed-in student (any Google account) can browse materials.
+    // Nobody can read this collection while signed out.
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    match /materials/{materialId} {
+      // Signed-in users see only approved items; admins see everything
+      // (needed for the pending-review queue). Firestore checks this per
+      // document, so list queries automatically only return docs that pass.
+      allow read: if isSignedIn() && (resource.data.status == 'approved' || isAdmin());
+
+      // Anyone can submit new material (even signed out) — it always starts
+      // as "pending" and can't be created pre-approved.
+      allow create: if request.resource.data.status == 'pending'
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() < 200;
+
+      // Only admins can approve, reject, or delete.
+      allow update, delete: if isAdmin();
+    }
+
+    match /announcements/{id} {
+      // Announcements are public — no login needed to see news/links on the homepage.
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+  }
+}

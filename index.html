@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Architecture Study Library</title>
+<meta name="description" content="A shared study library for architecture students — notes, books, question papers and references for Diploma, B.Arch and M.Arch.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap row">
+    <div class="brand" id="logoBrand">
+      <div class="logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M14 9h1"/><path d="M14 13h1"/></svg>
+      </div>
+      <div class="name">Architecture<small>Study Library</small></div>
+    </div>
+
+    <nav class="crumbs" id="crumbs"></nav>
+
+    <div class="auth-area">
+      <button class="btn btn-primary" id="contributeBtn">+ Contribute</button>
+      <div id="authArea"></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="mainContent"></main>
+
+<footer>Built for the group · contributions are reviewed by an admin before publishing</footer>
+
+<!-- Contribute Modal -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Contribute material</h3>
+      <button class="btn btn-sm" id="closeModal">Close</button>
+    </div>
+
+    <form id="contributeForm">
+      <label for="titleInput">Title</label>
+      <input type="text" id="titleInput" placeholder="e.g. Structures — Semester 4 notes">
+
+      <label for="courseSelect">Course</label>
+      <select id="courseSelect"></select>
+
+      <label for="partSelect">Part / Semester</label>
+      <select id="partSelect"></select>
+
+      <label for="subjectSelect">Subject</label>
+      <select id="subjectSelect"></select>
+
+      <label for="typeSelect">Type</label>
+      <select id="typeSelect"></select>
+
+      <label for="descInput">Description (optional)</label>
+      <textarea id="descInput" placeholder="What's in it, which topics it covers, etc."></textarea>
+
+      <label for="nameInput">Your name (optional)</label>
+      <input type="text" id="nameInput" placeholder="So people know who to thank">
+
+      <label>How are you sharing it?</label>
+      <div class="radio-row">
+        <label><input type="radio" name="method" value="link" checked> Paste a link</label>
+        <label><input type="radio" name="method" value="file"> Upload a file</label>
+      </div>
+
+      <div id="linkInputWrap">
+        <label for="linkInput">Link (Google Drive, YouTube, etc.)</label>
+        <input type="text" id="linkInput" placeholder="https://...">
+      </div>
+      <div id="fileInputWrap" style="display:none;">
+        <label for="fileInput">File (max 25MB)</label>
+        <input type="file" id="fileInput">
+        <div class="helper">Bigger file? Upload to Drive and paste the share link instead.</div>
+      </div>
+
+      <div class="error-msg" id="formError"></div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" id="submitBtn">Submit for review</button>
+      </div>
+    </form>
+    <div class="success-msg" id="formSuccess" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal-backdrop" id="loginBackdrop">
+  <div class="modal" style="max-width:400px; text-align:center;">
+    <div class="modal-header" style="justify-content:flex-end;">
+      <button class="btn btn-sm" id="closeLoginModal">Close</button>
+    </div>
+    <h3 style="margin-top:-24px;">Sign in to continue</h3>
+    <p style="font-size:13.5px; color:var(--text-500); margin:8px 0 22px;">
+      Question papers, books, notes and subject pages are available to signed-in students. It only takes a second.
+    </p>
+    <button class="btn btn-primary" id="googleSignInBtn" style="width:100%; justify-content:center;">
+      Continue with Google
+    </button>
+    <div class="error-msg" id="loginModalError"></div>
+  </div>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Architecture Study Library — Admin</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .admin-tabs{display:flex; gap:10px; margin-bottom:22px;}
+  .admin-tabs button{
+    font-weight:600; font-size:13.5px;
+    background:var(--surface); border:1px solid var(--border); color:var(--text-500);
+    padding:8px 16px; border-radius:10px; cursor:pointer;
+  }
+  .admin-tabs button.active{border-color:var(--primary); color:var(--primary); background:var(--primary-soft);}
+  #loginScreen{min-height:70vh; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px; text-align:center;}
+  #adminScreen .material-grid{margin-bottom:40px;}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap row">
+    <div class="brand">
+      <div class="logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/></svg>
+      </div>
+      <div class="name">Architecture<small>Admin panel</small></div>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px; font-size:13px; color:var(--text-500);">
+      <span id="adminEmail"></span>
+      <button class="btn btn-sm" id="logoutBtn" style="display:none;">Sign out</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div id="loginScreen">
+    <p class="eyebrow" style="justify-content:center;">Restricted access</p>
+    <h1 style="font-size:26px; margin:0;">Sign in to review submissions</h1>
+    <button class="btn btn-primary" id="loginBtn">Sign in with Google</button>
+    <div class="error-msg" id="loginError" style="text-align:center; max-width:340px;"></div>
+  </div>
+
+  <div id="adminScreen" style="display:none; padding-top:28px;">
+    <div class="admin-tabs">
+      <button id="tabPending" class="active">Pending (<span id="pendingCount">0</span>)</button>
+      <button id="tabApproved">Published (<span id="approvedCount">0</span>)</button>
+      <button id="tabAnnouncements">Announcements</button>
+    </div>
+
+    <div class="material-grid" id="pendingList"></div>
+    <div class="material-grid" id="approvedList" style="display:none;"></div>
+
+    <div id="announcementsPanel" style="display:none;">
+      <div class="tile" style="cursor:default; max-width:520px; margin-bottom:24px;">
+        <label for="annTitle">Title</label>
+        <input type="text" id="annTitle" placeholder="e.g. Semester 5 result declared">
+        <label for="annBody">Body (optional)</label>
+        <textarea id="annBody" placeholder="Short details..."></textarea>
+        <label for="annLink">Link (optional)</label>
+        <input type="text" id="annLink" placeholder="https://...">
+        <div class="form-actions"><button class="btn btn-primary btn-sm" id="postAnnBtn">Post announcement</button></div>
+        <div class="error-msg" id="annError"></div>
+      </div>
+      <div class="announce-grid" id="annList"></div>
+    </div>
+  </div>
+
+</main>
+
+<footer>Admin view · changes are live immediately</footer>
+
+<script type="module" src="admin.js"></script>
+</body>
+</html>
